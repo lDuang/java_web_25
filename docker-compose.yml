@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: commentdb
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./exam.sql:/docker-entrypoint-initdb.d/exam.sql:ro
+    command: ["mysqld", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_NAME: commentdb
+      DB_USER: root
+      DB_PASSWORD: root
+    ports:
+      - "8080:8080"
