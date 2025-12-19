@@ -22,20 +22,22 @@ public class MessageServlet extends HttpServlet{
 		doGet(req, resp);
 	}
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String path = request.getServletPath();
-		if(path.contains("add")) {
-			String user = "ÕÅÈı";  //ÒÑµÇÂ¼ÓÃ»§
-			request.setCharacterEncoding("UTF-8");
-			
-			String interest = request.getParameter("interest");
-			int score = Integer.parseInt(request.getParameter("score"));
+        @Override
+        protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+                // TODO Auto-generated method stub
+                request.setCharacterEncoding("UTF-8");
+                resp.setCharacterEncoding("UTF-8");
+                resp.setContentType("text/html;charset=UTF-8");
+                String path = request.getServletPath();
+                if(path.contains("add")) {
+                        String user = "å¼ ä¸‰";  //å·²ç™»å½•ç”¨æˆ·
+
+                        String interest = request.getParameter("interest");
+                        int score = Integer.parseInt(request.getParameter("score"));
 			String comment = request.getParameter("comment");
 			
 			Message msg = new Message(user,score,interest,comment,new Date(),1);
-			//²åÈëµ½±ícommentÖĞ
+			//æ’å…¥åˆ°è¡¨commentä¸­
 			MessageDao dao = new MessageDaoImpl();
 			int result = dao.saveMessage(msg);
 			
