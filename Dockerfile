@@ -1,9 +1,22 @@
 FROM tomcat:9-jdk11
 
+WORKDIR /usr/local/tomcat
+
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
 
-COPY exam/WebContent/ /usr/local/tomcat/webapps/ROOT/
-COPY exam/build/classes/ /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/
+# Copy static resources and dependencies
+COPY exam/WebContent/ webapps/ROOT/
+
+# Compile Java sources into WEB-INF/classes
+COPY exam/src/ /tmp/src/
+RUN mkdir -p /tmp/classes \
+ && javac -encoding UTF-8 \
+      -cp "lib/servlet-api.jar:webapps/ROOT/WEB-INF/lib/*" \
+      -d /tmp/classes \
+      $(find /tmp/src -name "*.java") \
+ && cp /tmp/src/db.properties /tmp/classes/ \
+ && cp -r /tmp/classes/* webapps/ROOT/WEB-INF/classes/ \
+ && rm -rf /tmp/src /tmp/classes
 
 ENV DB_HOST=db \
     DB_PORT=3306 \
