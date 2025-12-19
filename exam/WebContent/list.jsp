@@ -1,5 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page pageEncoding="GBK"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="forum.Message,java.util.Date,java.util.List"%>
 <%@ page import="java.text.DecimalFormat,java.text.SimpleDateFormat"%>
 <%@ page import="forum.ComparatorHotBest"%>  
@@ -17,7 +16,7 @@
 	</style>  
 <body>
 	<% 
-	    //4.Ê±¼ä¸ñÊ½»¯
+	    //4.æ—¶é—´æ ¼å¼åŒ–
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		DecimalFormat df = new DecimalFormat("#0");
 		List<Message> msgs = (List<Message>)request.getAttribute("list");
@@ -48,43 +47,43 @@
 	%>
 	<div class="container">
 		<div>
-			<h1>ÎÒ²»ÊÇÒ©Éñ ¶ÌÆÀ</h1>
+			<h1>æˆ‘ä¸æ˜¯è¯ç¥ž çŸ­è¯„</h1>
 		</div>
 		<div class="Comments-hd clearfix">
 			<ul class="commentTabs fl">
-				<li class="active">¿´¹ý(<%=overs %>)</li>
-				<li><a href="#">Ïë¿´(<%=wishs %>)</a></li>
+				<li class="active">çœ‹è¿‡(<%=overs %>)</li>
+				<li><a href="#">æƒ³çœ‹(<%=wishs %>)</a></li>
 			</ul>
 			<div class="fr">
-				<a class="comment_btn " href="add.html">ÎÒÀ´Ð´¶ÌÆÀ</a>
+				<a class="comment_btn " href="add.html">æˆ‘æ¥å†™çŸ­è¯„</a>
 			</div>
 			<div class="title_line"></div>
 		</div>
 		<div class="comments-sortby">
-			<span>ÈÈÃÅ</span>
-			<a href="#">×îÐÂ</a>
-			<a href="#">ºÃÓÑ</a>
+			<span>çƒ­é—¨</span>
+			<a href="#">æœ€æ–°</a>
+			<a href="#">å¥½å‹</a>
 			<div class="title_line"></div>
 		</div>
 		
 		<div class="comment-filter">
 			<label for="">
 				<input type="radio" name="sort" >
-				<span class="filter-name">È«²¿</span>
+				<span class="filter-name">å…¨éƒ¨</span>
 			</label>
 			<label for="">
 				<input type="radio" name="sort" checked="checked">
-				<span class="filter-name">ºÃÆÀ</span>
+				<span class="filter-name">å¥½è¯„</span>
 				<span class="comment-percent"><%= df.format(1.0f*highs/count*100)%>%</span>
 			</label>
 			<label for="">
 				<input type="radio" name="sort" >
-				<span class="filter-name">Ò»°ã</span>
+				<span class="filter-name">ä¸€èˆ¬</span>
 				<span class="comment-percent"><%= df.format(1.0f*mids/count*100)%>%</span>
 			</label>
 			<label for="">
 				<input type="radio" name="sort" >
-				<span calss="filter-name">²îÆÀ</span>
+				<span calss="filter-name">å·®è¯„</span>
 				<span class="comment-percent"><%= df.format(1.0f*lows/count*100)%>%</span>
 			</label>
 			<div class="title_line"></div>
@@ -95,25 +94,25 @@
 		    %>
 		    <div class="comment-item">
 				<div class="avatar fl">
-					<a title="ÓÃ»§Ãû"><img src="image/headshot.jpg"></a>
+					<a title="ç”¨æˆ·å"><img src="image/headshot.jpg"></a>
 				</div>
 				<div class="comment">
 					<span class="comment-info">
-						<a href="#"><%="ÐìÈô·ç" %></a>   <!-- m.getUser() -->
+						<a href="#"><%="å¾è‹¥é£Ž" %></a>   <!-- m.getUser() -->
 						<%
 							if(m.getInterest().equals("over")){
 						%>
-						<span>¿´¹ý</span>
+						<span>çœ‹è¿‡</span>
 						<%}else{
 						%>
-						<span>Ïë¿´</span>
+						<span>æƒ³çœ‹</span>
 						<%} %>
 						<img src="image/star<%=m.getScore() %>.png">
 						<span class="comment-time"> <%=sdf.format(m.getDate()) %></span>
 					</span>
 					<span class="comment-vote fr">
 						<span class="vote_counts"><%=m.getVote_count() %></span>
-						<input type="button" class="vote" value="ÓÐÓÃ">
+						<input type="button" class="vote" value="æœ‰ç”¨">
 						<span style="display:none"><%=m.getId() %></span>
 					</span>
 					<p>
