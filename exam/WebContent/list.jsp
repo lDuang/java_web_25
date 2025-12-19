@@ -34,10 +34,7 @@
 						var db = parseInt($b.data("date"), 10) || 0;
 						return db - da; // 时间最新在前
 					}
-					// 热门：优先 vote_count，其次 score
-					var va = parseInt($a.data("vote"), 10) || 0;
-					var vb = parseInt($b.data("vote"), 10) || 0;
-					if (vb !== va) return vb - va;
+					// 热门：按星级从高到低
 					var sa = parseInt($a.data("score"), 10) || 0;
 					var sb = parseInt($b.data("score"), 10) || 0;
 					return sb - sa;

@@ -73,6 +73,18 @@ h1{
 	margin-right:26px;
 }
 
+.comments-sortby .sort-tab{
+	display:inline-block;
+	padding-bottom:6px;
+	border-bottom: 4px solid transparent;
+	cursor: pointer;
+}
+
+.comments-sortby .sort-tab.active{
+	border-bottom-color:#777;
+	color:#777;
+}
+
 .comments-sortby .title_line{
 	border: 0.5px solid #ddd;
 	height: 0.5px;
