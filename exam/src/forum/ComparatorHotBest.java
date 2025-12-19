@@ -6,16 +6,16 @@ import java.util.Comparator;
 import java.util.List;
 
 /***
- * °´ÕÕÈÈÃÅ¡¢ºÃÆÀÅÅĞò
+ * Â°Â´ÅÅÄŒÄŒÄ‚Ä¹Ä„Ë˜ÅŸÄ‚Ä†Å”Ä¹Ä¹ÄÅˆ
  */
 public class ComparatorHotBest implements Comparator {
 	public int compare(Object obj1, Object obj2) {
 		if(obj1 instanceof Message && obj2 instanceof Message){
 			Message s1=(Message)obj1;
 			Message s2=(Message)obj2;
-			int diff = s2.getVote_count()-s1.getVote_count();  //Í¶Æ±½µĞò
+			int diff = s2.getVote_count()-s1.getVote_count();  //ÃÅ›Ä†Ä…ËÄ¾ÄÅˆ
 			if(diff==0){
-				return 	s2.getScore()-s1.getScore();  //ÆÀ·Ö½µĞò
+				return 	s2.getScore()-s1.getScore();  //Ä†Å”Ë‡Ã–ËÄ¾ÄÅˆ
 			}else{
 				return diff;
 			}

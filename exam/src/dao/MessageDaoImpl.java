@@ -18,7 +18,7 @@ public class MessageDaoImpl implements MessageDao{
 		int result = 0;
 		
 		try {
-			//1.´ÓÊı¾İ¿âÁ¬½Ó³Ø»ñÈ¡Ò»¸öÁ¬½Ó
+			//1.ä»æ•°æ®åº“è¿æ¥æ± è·å–ä¸€ä¸ªè¿æ¥
 			con = DBUtil.getConnection();
 			
 			String sql = "insert into comment(user,score,interest,comment,date ) " +
@@ -48,14 +48,14 @@ public class MessageDaoImpl implements MessageDao{
 		ResultSet rs = null;
 		
 		try {			
-			//1.´ÓÊı¾İ¿âÁ¬½Ó³Ø»ñÈ¡Ò»¸öÁ¬½Ó
+			//1.ä»æ•°æ®åº“è¿æ¥æ± è·å–ä¸€ä¸ªè¿æ¥
 			con = DBUtil.getConnection();
-			//2.»ñÈ¡Statement¶ÔÏó
+			//2.è·å–Statementå¯¹è±¡
 			st = con.createStatement();
 			String sql = "select * from comment";			
 			rs = st.executeQuery(sql);
 			
-			//3.´¦Àí²éÑ¯½á¹û
+			//3.å¤„ç†æŸ¥è¯¢ç»“æœ
 			List<Message> list = new ArrayList<Message>();
 			while(rs.next()){
 				Message msg = new Message();
@@ -76,7 +76,8 @@ public class MessageDaoImpl implements MessageDao{
 			if(st!=null)  {try{st.close();} catch(Exception e){}}
 			if(con!=null) {try{con.close();} catch(Exception e){}}
 		}
-		return null;
+		// è¿”å›ç©ºåˆ—è¡¨è€Œä¸æ˜¯ nullï¼Œé¿å…è°ƒç”¨æ–¹ NPE
+		return new ArrayList<Message>();
 	}
 
 }

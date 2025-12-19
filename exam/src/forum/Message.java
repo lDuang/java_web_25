@@ -5,11 +5,11 @@ import java.util.Date;
 public class Message {   
 	private int id;
 	private String user;
-	private int score; //ĞÇ¼¶
-	private String interest; //ĞËÈ¤£º¿´¹ı/Ïë¿´
+	private int score; //æ˜Ÿçº§
+	private String interest; //å…´è¶£ï¼šçœ‹è¿‡/æƒ³çœ‹
 	private String comment;
 	private Date date;
-	private int vote_count;  //ÓĞÓÃµÄÊıÁ¿
+	private int vote_count;  //æœ‰ç”¨çš„æ•°é‡
 	
 	public Message( String user, int score, String interest, 
 			String comment, Date date, int vote_count) {

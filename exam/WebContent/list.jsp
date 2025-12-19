@@ -22,6 +22,16 @@
             //4.时间格式化
                 DecimalFormat df = new DecimalFormat("#0");
                 List<Message> msgs = (List<Message>)request.getAttribute("list");
+                if (msgs == null) {
+                    // JSP 直接访问时没有预置 list，尝试查询一遍并防空
+                    try {
+                        dao.MessageDao dao = new dao.MessageDaoImpl();
+                        msgs = dao.list();
+                    } catch (Exception ignore) {}
+                }
+                if (msgs == null) {
+                    msgs = new java.util.ArrayList<Message>();
+                }
             int wishs = 0;
             int overs = 0;
 
@@ -47,9 +57,15 @@
 
             request.setAttribute("wishs", wishs);
             request.setAttribute("overs", overs);
-            request.setAttribute("highPercent", df.format(1.0f*highs/count*100));
-            request.setAttribute("midPercent", df.format(1.0f*mids/count*100));
-            request.setAttribute("lowPercent", df.format(1.0f*lows/count*100));
+            if (count > 0) {
+                request.setAttribute("highPercent", df.format(1.0f*highs/count*100));
+                request.setAttribute("midPercent", df.format(1.0f*mids/count*100));
+                request.setAttribute("lowPercent", df.format(1.0f*lows/count*100));
+            } else {
+                request.setAttribute("highPercent", "0");
+                request.setAttribute("midPercent", "0");
+                request.setAttribute("lowPercent", "0");
+            }
 	    
 	    
 	%>
