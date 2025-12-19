@@ -63,7 +63,7 @@
                                 <li><a href="#">想看(<c:out value="${wishs}" />)</a></li>
                         </ul>
 			<div class="fr">
-				<a class="comment_btn " href="add.html">我来写短评</a>
+                                <a class="comment_btn " href="add.jsp">我来写短评</a>
 			</div>
 			<div class="title_line"></div>
 		</div>
