@@ -10,4 +10,6 @@ public interface MessageDao {
 
 	List<Message> list();
 
+	int incrementVoteCount(int id);
+
 }

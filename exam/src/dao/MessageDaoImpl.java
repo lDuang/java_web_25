@@ -66,6 +66,7 @@ public class MessageDaoImpl implements MessageDao{
 				msg.setInterest(rs.getString("interest"));	
 				msg.setComment(rs.getString("comment"));		
 				msg.setDate(rs.getDate("date"));	
+				msg.setVote_count(rs.getInt("vote_count"));
 				list.add(msg);
 			}		
 			return list;
@@ -80,4 +81,38 @@ public class MessageDaoImpl implements MessageDao{
 		return new ArrayList<Message>();
 	}
 
+	@Override
+	public int incrementVoteCount(int id) {
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		int count = -1;
+		try {
+			con = DBUtil.getConnection();
+			con.setAutoCommit(false);
+
+			pst = con.prepareStatement("update comment set vote_count = vote_count + 1 where id = ?");
+			pst.setInt(1, id);
+			pst.executeUpdate();
+			pst.close();
+
+			pst = con.prepareStatement("select vote_count from comment where id = ?");
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+			con.commit();
+		} catch (SQLException e) {
+			if (con != null) {
+				try { con.rollback(); } catch (SQLException ignore) {}
+			}
+			e.printStackTrace();
+		} finally {
+			if (rs != null) { try { rs.close(); } catch (Exception ignore) {} }
+			if (pst != null) { try { pst.close(); } catch (Exception ignore) {} }
+			if (con != null) { try { con.close(); } catch (Exception ignore) {} }
+		}
+		return count;
+	}
 }
