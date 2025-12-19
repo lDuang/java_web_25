@@ -37,7 +37,8 @@ public class DBUtil {
             if (envHost != null && !envHost.isEmpty()) {
                 String port = (envPort != null && !envPort.isEmpty()) ? envPort : "3306";
                 String dbName = (envName != null && !envName.isEmpty()) ? envName : extractDbName(url);
-                url = "jdbc:mysql://" + envHost + ":" + port + "/" + dbName + "?useUnicode=true&characterEncoding=utf8";
+                url = "jdbc:mysql://" + envHost + ":" + port + "/" + dbName
+                + "?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
             }
 
             if (envUser != null && !envUser.isEmpty()) {
@@ -62,7 +63,7 @@ public class DBUtil {
 
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("初始化连接池失败");
+            throw new RuntimeException("始映失");
 
         }
     }
