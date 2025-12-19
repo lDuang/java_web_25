@@ -21,9 +21,8 @@ services:
       retries: 10
 
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/lduang/java-web-exam:latest
+    pull_policy: always
     depends_on:
       db:
         condition: service_healthy
