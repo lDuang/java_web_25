@@ -1,7 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="forum.Message,java.util.Date,java.util.List"%>
-<%@ page import="java.text.DecimalFormat,java.text.SimpleDateFormat"%>
-<%@ page import="forum.ComparatorHotBest"%>  
+<%@ page import="java.text.DecimalFormat"%>
+<%@ page import="forum.ComparatorHotBest"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,18 +13,18 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css">	
 	<script src="js/jquery-1.10.1.min.js"></script>
 	<script type="text/javascript" src="js/vote.js" ></script>
-	<style type="text/css">
-		
-	</style>  
+        <style type="text/css">
+
+        </style>
 <body>
-	<% 
-	    //4.时间格式化
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		DecimalFormat df = new DecimalFormat("#0");
-		List<Message> msgs = (List<Message>)request.getAttribute("list");
-	    int wishs = 0;
-	    int overs = 0;
-	    
+        <jsp:useBean id="now" class="java.util.Date" scope="page" />
+        <%
+            //4.时间格式化
+                DecimalFormat df = new DecimalFormat("#0");
+                List<Message> msgs = (List<Message>)request.getAttribute("list");
+            int wishs = 0;
+            int overs = 0;
+
 	    int lows = 0;
 	    int mids = 0;
 	    int highs = 0;
@@ -40,8 +42,14 @@
 	    		mids++;
 	    	}else{
 	    		highs++;
-	    	}
-	    }
+                }
+            }
+
+            request.setAttribute("wishs", wishs);
+            request.setAttribute("overs", overs);
+            request.setAttribute("highPercent", df.format(1.0f*highs/count*100));
+            request.setAttribute("midPercent", df.format(1.0f*mids/count*100));
+            request.setAttribute("lowPercent", df.format(1.0f*lows/count*100));
 	    
 	    
 	%>
@@ -50,10 +58,10 @@
 			<h1>我不是药神 短评</h1>
 		</div>
 		<div class="Comments-hd clearfix">
-			<ul class="commentTabs fl">
-				<li class="active">看过(<%=overs %>)</li>
-				<li><a href="#">想看(<%=wishs %>)</a></li>
-			</ul>
+                        <ul class="commentTabs fl">
+                                <li class="active">看过(<c:out value="${overs}" />)</li>
+                                <li><a href="#">想看(<c:out value="${wishs}" />)</a></li>
+                        </ul>
 			<div class="fr">
 				<a class="comment_btn " href="add.html">我来写短评</a>
 			</div>
@@ -72,61 +80,82 @@
 				<span class="filter-name">全部</span>
 			</label>
 			<label for="">
-				<input type="radio" name="sort" checked="checked">
-				<span class="filter-name">好评</span>
-				<span class="comment-percent"><%= df.format(1.0f*highs/count*100)%>%</span>
-			</label>
-			<label for="">
-				<input type="radio" name="sort" >
-				<span class="filter-name">一般</span>
-				<span class="comment-percent"><%= df.format(1.0f*mids/count*100)%>%</span>
-			</label>
-			<label for="">
-				<input type="radio" name="sort" >
-				<span calss="filter-name">差评</span>
-				<span class="comment-percent"><%= df.format(1.0f*lows/count*100)%>%</span>
-			</label>
-			<div class="title_line"></div>
-		</div>
-		<div class="mod-bd ">
-		    <% 
-		        for(Message m:msgs){
-		    %>
-		    <div class="comment-item">
-				<div class="avatar fl">
-					<a title="用户名"><img src="image/headshot.jpg"></a>
-				</div>
-				<div class="comment">
-					<span class="comment-info">
-						<a href="#"><%="徐若风" %></a>   <!-- m.getUser() -->
-						<%
-							if(m.getInterest().equals("over")){
-						%>
-						<span>看过</span>
-						<%}else{
-						%>
-						<span>想看</span>
-						<%} %>
-						<img src="image/star<%=m.getScore() %>.png">
-						<span class="comment-time"> <%=sdf.format(m.getDate()) %></span>
-					</span>
-					<span class="comment-vote fr">
-						<span class="vote_counts"><%=m.getVote_count() %></span>
-						<input type="button" class="vote" value="有用">
-						<span style="display:none"><%=m.getId() %></span>
-					</span>
-					<p>
-						<span class="short">
-							<%=m.getComment() %>
-						</span>
-					</p>
-				</div>
-				<div class="title_line"></div>
-			</div>
-		    <% 
-		        }
-		    %>
-		</div>
+                                <input type="radio" name="sort" checked="checked">
+                                <span class="filter-name">好评</span>
+                                <span class="comment-percent"><c:out value="${highPercent}" />%</span>
+                        </label>
+                        <label for="">
+                                <input type="radio" name="sort" >
+                                <span class="filter-name">一般</span>
+                                <span class="comment-percent"><c:out value="${midPercent}" />%</span>
+                        </label>
+                        <label for="">
+                                <input type="radio" name="sort" >
+                                <span calss="filter-name">差评</span>
+                                <span class="comment-percent"><c:out value="${lowPercent}" />%</span>
+                        </label>
+                        <div class="title_line"></div>
+                </div>
+                <div class="mod-bd ">
+                    <c:forEach items="${list}" var="m">
+                    <div class="comment-item">
+                                <div class="avatar fl">
+                                        <a title="用户名"><img src="image/headshot.jpg"></a>
+                                </div>
+                                <div class="comment">
+                                        <span class="comment-info">
+                                                <a href="#"><c:out value="徐若风" /></a>   <!-- m.getUser() -->
+                                                <c:choose>
+                                                        <c:when test="${m.interest eq 'over'}">
+                                                                <span>看过</span>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                                <span>想看</span>
+                                                        </c:otherwise>
+                                                </c:choose>
+                                                <img src="image/star${m.score}.png">
+                                                <span class="comment-time"> <fmt:formatDate value="${m.date}" pattern="yyyy-MM-dd" /></span>
+                                        </span>
+                                        <span class="comment-vote fr">
+                                                <span class="vote_counts"><c:out value="${m.vote_count}" /></span>
+                                                <input type="button" class="vote" value="有用">
+                                                <span style="display:none"><c:out value="${m.id}" /></span>
+                                        </span>
+                                        <p>
+                                                <span class="short">
+                                                        <c:out value="${m.comment}" />
+                                                </span>
+                                        </p>
+                                </div>
+                                <div class="title_line"></div>
+                        </div>
+                    </c:forEach>
+                    <c:set var="htmlTestComment" value="<script>alert('xss')</script> <b>Bold Text</b>" />
+                    <div class="comment-item">
+                                <div class="avatar fl">
+                                        <a title="测试用户"><img src="image/headshot.jpg"></a>
+                                </div>
+                                <div class="comment">
+                                        <span class="comment-info">
+                                                <a href="#">测试用户</a>
+                                                <span>看过</span>
+                                                <img src="image/star5.png">
+                                                <span class="comment-time"> <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" /></span>
+                                        </span>
+                                        <span class="comment-vote fr">
+                                                <span class="vote_counts">0</span>
+                                                <input type="button" class="vote" value="有用">
+                                                <span style="display:none">test</span>
+                                        </span>
+                                        <p>
+                                                <span class="short">
+                                                        <c:out value="${htmlTestComment}" />
+                                                </span>
+                                        </p>
+                                </div>
+                                <div class="title_line"></div>
+                        </div>
+                </div>
 
 		
 
